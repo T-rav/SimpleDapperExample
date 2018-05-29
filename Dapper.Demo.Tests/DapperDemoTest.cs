@@ -28,7 +28,7 @@ namespace Dapper.Demo.Tests
                 connection.Open();
 
                 //---------------Act----------------------
-                var sql = "select Id,Name,Email,Login,TimeZoneId,ExternalSystemId from dbo.Customers";
+                var sql = "SELECT Id,Name,Email,Login,TimeZoneId,ExternalSystemId FROM dbo.Customers";
                 var customers = connection.Query<Customer>(sql);
 
                 //---------------Assert-----------------------

@@ -1,0 +1,3 @@
+Create new Customer called EditCustomer
+  - It maps all properties for editing
+  - Do this via a new test using TDD
