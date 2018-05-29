@@ -13,5 +13,4 @@
 	[UtcBillTime] DATETIME NOT NULL,
 	[Created] DATETIME NOT NULL, 
 	[Modifed] DATETIME NOT NULL
-
-)
+);

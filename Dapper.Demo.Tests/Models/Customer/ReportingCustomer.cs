@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DemoApplication.Models
+﻿namespace Dapper.Demo.Tests.Models.Customer
 {
-    public class SimpleCustomer
+    public class ReportingCustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,5 +9,6 @@ namespace DemoApplication.Models
         public int TimeZoneId { get; set; }
         public int ExternalSystemId { get; set; }
 
+        public CustomerPhysicalAddress Address { get; set; }
     }
 }

@@ -3,17 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApplication", "DemoApplication\DemoApplication.csproj", "{45110F39-0CEC-4F10-B6BD-28F1C7F5E36B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{CF23469B-75F4-4F5B-8E19-9D946668DE63}"
-	ProjectSection(SolutionItems) = preProject
-		DemoApplication\sql\Create dbo.Calls.sql = DemoApplication\sql\Create dbo.Calls.sql
-		DemoApplication\sql\Create dbo.Customers.sql = DemoApplication\sql\Create dbo.Customers.sql
-		DemoApplication\sql\Insert dbo.Calls.sql = DemoApplication\sql\Insert dbo.Calls.sql
-		DemoApplication\sql\Insert dbo.Customers.sql = DemoApplication\sql\Insert dbo.Customers.sql
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Demo.Tests", "Dapper.Demo.Tests\Dapper.Demo.Tests.csproj", "{973F0A7B-A3A5-4BED-AEC5-56E2747DD129}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{EEE65649-5CC5-4EE3-8D4E-EA395B0D5CDD}"
+	ProjectSection(SolutionItems) = preProject
+		sql\Create dbo.Calls.sql = sql\Create dbo.Calls.sql
+		sql\Create dbo.Customers.sql = sql\Create dbo.Customers.sql
+		sql\Create dbo.PhysicalAddresses.sql = sql\Create dbo.PhysicalAddresses.sql
+		sql\Insert dbo.Calls.sql = sql\Insert dbo.Calls.sql
+		sql\Insert dbo.Customers.sql = sql\Insert dbo.Customers.sql
+		sql\Insert dbo.PhysicalAddresses.sql = sql\Insert dbo.PhysicalAddresses.sql
+		readme.txt = readme.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{45110F39-0CEC-4F10-B6BD-28F1C7F5E36B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45110F39-0CEC-4F10-B6BD-28F1C7F5E36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45110F39-0CEC-4F10-B6BD-28F1C7F5E36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45110F39-0CEC-4F10-B6BD-28F1C7F5E36B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{973F0A7B-A3A5-4BED-AEC5-56E2747DD129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{973F0A7B-A3A5-4BED-AEC5-56E2747DD129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{973F0A7B-A3A5-4BED-AEC5-56E2747DD129}.Release|Any CPU.ActiveCfg = Release|Any CPU
