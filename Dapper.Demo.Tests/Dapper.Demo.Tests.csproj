@@ -70,8 +70,8 @@
     <Compile Include="CustomerDataServiceTests.cs" />
     <Compile Include="Models\Call.cs" />
     <Compile Include="Models\Customer\BillingCustomer.cs" />
-    <Compile Include="Models\Customer\ReportingCustomer.cs" />
-    <Compile Include="Models\CustomerPhysicalAddress.cs" />
+    <Compile Include="Models\Customer\InvoiceCustomer.cs" />
+    <Compile Include="Models\InvoiceAddress.cs" />
     <Compile Include="Models\Customer\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

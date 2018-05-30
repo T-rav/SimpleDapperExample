@@ -1,6 +1,6 @@
 ﻿namespace Dapper.Demo.Tests.Models.Customer
 {
-    public class ReportingCustomer
+    public class InvoiceCustomer
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -9,6 +9,6 @@
         public int TimeZoneId { get; set; }
         public int ExternalSystemId { get; set; }
 
-        public CustomerPhysicalAddress Address { get; set; }
+        public InvoiceAddress Address { get; set; }
     }
 }

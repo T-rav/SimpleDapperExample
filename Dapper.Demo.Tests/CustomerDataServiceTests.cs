@@ -23,108 +23,93 @@ namespace Dapper.Demo.Tests
             //---------------Arrange-------------------
             var customerDataService = new CustomerDataService("DapperDemo");
             //---------------Act----------------------
-            var customers = customerDataService.GetCustomers();
+            var actual = customerDataService.GetCustomers();
 
             var actualFirstAndLast = new List<Customer>
-                {
-                    customers.First(),
-                    customers.Last()
-                };
+            {
+                actual.First(),
+                actual.Last()
+            };
             //---------------Assert-----------------------
             var expectedFirstAndLast = new List<Customer>
+            {
+                new Customer
                 {
-                    new Customer
+                    Id = 1,
+                    Name = "ReshetCall Ltd",
+                    Email = "gal@reshetcall.co.il,v@bizvoip.co.za",
+                    Login = "gal@reshetcall.co.il",
+                    ExternalSystemId = 53580,
+                    TimeZoneId = 370
+                },
+                new Customer
+                {
+                    Id = 50,
+                    Name = "Air Hub Customer1",
+                    Email = "litc@live.co.za",
+                    Login = null,
+                    ExternalSystemId = 55596,
+                    TimeZoneId = 113
+                }
+            };
+            Assert.AreEqual(50, actual.Count());
+            actualFirstAndLast.Should().BeEquivalentTo(expectedFirstAndLast);
+        }
+
+        [Test]
+        public void PopulateBillingCustomer_WhenPerformingOneToOneMapping_ShouldReturnCustomersAndTheirPhysicalAddress()
+        {
+            //---------------Arrange-------------------
+            var dataService = new CustomerDataService("DapperDemo");
+            //---------------Act----------------------
+            var actual = dataService.GetInvoiceCustomer();
+            var actualFirstAndLast = new List<InvoiceCustomer>
+            {
+                actual.First(),
+                actual.Last()
+            };
+            //---------------Assert-----------------------
+            var expectedFirstAndLast = new List<InvoiceCustomer>
+            {
+                new InvoiceCustomer
+                {
+                    Id = 1,
+                    Name = "ReshetCall Ltd",
+                    Email = "gal@reshetcall.co.il,v@bizvoip.co.za",
+                    Login = "gal@reshetcall.co.il",
+                    ExternalSystemId = 53580,
+                    TimeZoneId = 370,
+                    Address = new InvoiceAddress
                     {
-                        Id = 1,
-                        Name = "ReshetCall Ltd",
-                        Email = "gal@reshetcall.co.il,v@bizvoip.co.za",
-                        Login = "gal@reshetcall.co.il",
-                        ExternalSystemId = 53580,
-                        TimeZoneId = 370
-                    },
-                    new Customer
-                    {
-                        Id = 50,
-                        Name = "Air Hub Customer1",
-                        Email = "litc@live.co.za",
-                        Login = null,
-                        ExternalSystemId = 55596,
-                        TimeZoneId = 113
+                        AddressLine1 = "8218 Valentina Divide",
+                        AddressLine2 = "171 Leif Landing",
+                        City = "New Missouriport",
+                        Province = "Mpumalanga",
+                        PostCode = "8484"
                     }
-                };
-            Assert.AreEqual(50, customers.Count());
+                },
+                new InvoiceCustomer
+                {
+                    Id = 50,
+                    Name = "Air Hub Customer1",
+                    Email = "litc@live.co.za",
+                    Login = null,
+                    ExternalSystemId = 55596,
+                    TimeZoneId = 113,
+                    Address = new InvoiceAddress
+                    {
+                        AddressLine1 = "6789 Verla Field",
+                        AddressLine2 = "83553 Peggie Fords",
+                        City = "New Noraport",
+                        Province = "Limpopo",
+                        PostCode = "9543"
+                    }
+                }
+            };
+            Assert.AreEqual(50, actual.Count());
             actualFirstAndLast.Should().BeEquivalentTo(expectedFirstAndLast);
         }
     }
-
-    //[Test]
-    //[Ignore("wip")]
-    //public void PopulateBillingCustomer_WhenPerformingOneToOneMapping_ShouldReturnCustomersAndTheirPhysicalAddress()
-    //{
-    //    // todo : join data
-    //    using (var connection = new SqlConnection(_connectionString))
-    //    {
-    //        //---------------Arrange-------------------
-    //        connection.Open();
-
-    //        //---------------Act----------------------
-    //        var sql = "SELECT c.Id, Name,Email, Login, TimeZoneId, ExternalSystemId," +
-    //                  " AddressLine1, AddressLine2, City, Province, PostCode" +
-    //                  " FROM dbo.Customers c JOIN dbo.PhysicalAddresses pa" +
-    //                  " ON c.Id = pa.CustomerId";
-    //        var customers = connection.Query<ReportingCustomer, CustomerPhysicalAddress, ReportingCustomer>(sql,
-    //            (customer, address) =>
-    //            {
-    //                customer.Address = address;
-    //                return customer;
-    //            }, splitOn: "Id,CustomerId");
-    //        var actualFirstAndLast = new List<ReportingCustomer>
-    //        {
-    //            customers.First(),
-    //            customers.Last()
-    //        };
-    //        //---------------Assert-----------------------
-    //        var expectedFirstAndLast = new List<ReportingCustomer>
-    //        {
-    //            new ReportingCustomer
-    //            {
-    //                Id = 1,
-    //                Name = "ReshetCall Ltd",
-    //                Email = "gal@reshetcall.co.il,v@bizvoip.co.za",
-    //                Login = "gal@reshetcall.co.il",
-    //                ExternalSystemId = 53580,
-    //                TimeZoneId = 370,
-    //                Address = new CustomerPhysicalAddress
-    //                {
-    //                    AddressLine1 = "8218 Valentina Divide",
-    //                    AddressLine2 = "171 Leif Landing",
-    //                    City = "New Missouriport",
-    //                    Province = "Mpumalanga",
-    //                    PostCode = "8484"
-    //                }
-    //            },
-    //            new ReportingCustomer
-    //            {
-    //                Id = 50,
-    //                Name = "Air Hub Customer1",
-    //                Email = "litc@live.co.za",
-    //                Login = null,
-    //                ExternalSystemId = 55596,
-    //                TimeZoneId = 113,
-    //                Address = new CustomerPhysicalAddress
-    //                {
-    //                    AddressLine1 = "6789 Verla Field",
-    //                    AddressLine2 = "83553 Peggie Fords",
-    //                    City = "New Noraport",
-    //                    Province = "Limpopo",
-    //                    PostCode = "9543"
-    //                }
-    //            }
-    //        };
-    //        Assert.AreEqual(50, customers.Count());
-    //        actualFirstAndLast.Should().BeEquivalentTo(expectedFirstAndLast);
-    //    }
-    //}
 
     //[Test]
     //[Ignore("wip")]

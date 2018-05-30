@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using Dapper.Demo.Tests.Models;
 using Dapper.Demo.Tests.Models.Customer;
 
 namespace Dapper.Demo.Tests
@@ -19,6 +20,24 @@ namespace Dapper.Demo.Tests
             {
                 var sql = "SELECT Id,Name,Email,Login,TimeZoneId,ExternalSystemId FROM dbo.Customers";
                 var customers = connection.Query<Customer>(sql);
+                return customers;
+            }
+        }
+
+        public IEnumerable<InvoiceCustomer> GetInvoiceCustomer()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var sql = "SELECT *" +
+                          " FROM dbo.Customers c LEFT JOIN dbo.PhysicalAddresses pa" +
+                          " ON c.Id = pa.CustomerId";
+                var customers = connection.Query<InvoiceCustomer, InvoiceAddress, InvoiceCustomer>(sql,
+                    (customer, address) =>
+                    {
+                        customer.Address = address;
+                        return customer;
+                    }, splitOn: "Id");
+
                 return customers;
             }
         }
