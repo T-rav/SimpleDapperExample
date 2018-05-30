@@ -1,3 +1,4 @@
-Create new Customer called EditCustomer
+Create method called GetEditCustomers 
+which returns a new Customer called EditCustomer
   - It maps all properties for editing
   - Do this via a new test using TDD

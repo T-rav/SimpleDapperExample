@@ -66,7 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DapperDemoTest.cs" />
+    <Compile Include="CustomerDataService.cs" />
+    <Compile Include="CustomerDataServiceTests.cs" />
     <Compile Include="Models\Call.cs" />
     <Compile Include="Models\Customer\BillingCustomer.cs" />
     <Compile Include="Models\Customer\ReportingCustomer.cs" />
