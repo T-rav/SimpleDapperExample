@@ -21,7 +21,7 @@ namespace Dapper.Demo.Tests
         public void GetCustomers_WhenDataPresent_ShouldReturnCollectionOfCustomers()
         {
             //---------------Arrange-------------------
-            var customerDataService = new CustomerDataService();
+            var customerDataService = new CustomerDataService("DapperDemo");
             //---------------Act----------------------
             var customers = customerDataService.GetCustomers();
 

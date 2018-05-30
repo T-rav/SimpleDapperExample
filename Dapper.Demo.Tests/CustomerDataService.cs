@@ -6,7 +6,12 @@ namespace Dapper.Demo.Tests
 {
     public class CustomerDataService
     {
-        private string _connectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated Security=true;Initial Catalog=DapperDemo";
+        private readonly string _connectionString;
+
+        public CustomerDataService(string dbName)
+        {
+            _connectionString = $"Server=(localdb)\\MSSQLLocalDB;Integrated Security=true;Initial Catalog={dbName}";
+        }
 
         public IEnumerable<Customer> GetCustomers()
         {
