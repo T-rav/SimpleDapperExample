@@ -20,7 +20,7 @@ namespace Dapper.Demo.Tests
         private string _connectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated Security=true;Initial Catalog=DapperDemo";
 
         [Test]
-        public void PopulateSimpleCustomerObject_WhenIssuingSelect_ShouldReturnCollectionOfCustomers()
+        public void PopulateCustomer_WhenIssuingSelect_ShouldReturnCollectionOfCustomers()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -30,15 +30,40 @@ namespace Dapper.Demo.Tests
                 //---------------Act----------------------
                 var sql = "SELECT Id,Name,Email,Login,TimeZoneId,ExternalSystemId FROM dbo.Customers";
                 var customers = connection.Query<Customer>(sql);
-
+                var actualFirstAndLast = new List<Customer>
+                {
+                    customers.First(),
+                    customers.Last()
+                };
                 //---------------Assert-----------------------
+                var expectedFirstAndLast = new List<Customer>
+                {
+                    new Customer
+                    {
+                        Id = 1,
+                        Name = "ReshetCall Ltd",
+                        Email = "gal@reshetcall.co.il,v@bizvoip.co.za",
+                        Login = "gal@reshetcall.co.il",
+                        ExternalSystemId = 53580,
+                        TimeZoneId = 370
+                    },
+                    new Customer
+                    {
+                        Id = 50,
+                        Name = "Air Hub Customer1",
+                        Email = "litc@live.co.za",
+                        Login = null,
+                        ExternalSystemId = 55596,
+                        TimeZoneId = 113
+                    }
+                };
                 Assert.AreEqual(50, customers.Count());
-                Assert.AreEqual(new Customer(), customers.First());
-                Assert.AreEqual(new Customer(), customers.Last());
+                actualFirstAndLast.Should().BeEquivalentTo(expectedFirstAndLast);
             }
         }
 
         [Test]
+        [Ignore("wip")]
         public void PopulateBillingCustomer_WhenPerformingOneToOneMapping_ShouldReturnCustomersAndTheirPhysicalAddress()
         {
             // todo : join data
@@ -48,24 +73,66 @@ namespace Dapper.Demo.Tests
                 connection.Open();
 
                 //---------------Act----------------------
-                var sql = "select Id, Name,Email, Login, TimeZoneId, ExternalSystemId from dbo.Customers";
-                var customers = connection.Query<ReportingCustomer, Call, ReportingCustomer>(sql,
-                    (customer, call) =>
+                var sql = "SELECT c.Id, Name,Email, Login, TimeZoneId, ExternalSystemId," +
+                          " AddressLine1, AddressLine2, City, Province, PostCode" +
+                          " FROM dbo.Customers c JOIN dbo.PhysicalAddresses pa" +
+                          " ON c.Id = pa.CustomerId";
+                var customers = connection.Query<ReportingCustomer, CustomerPhysicalAddress, ReportingCustomer>(sql,
+                    (customer, address) =>
                     {
-                        //if (call.ExternalAccountId)
-                        return null;
-                    });
-
+                        customer.Address = address;
+                        return customer;
+                    }, splitOn: "Id,CustomerId");
+                var actualFirstAndLast = new List<ReportingCustomer>
+                {
+                    customers.First(),
+                    customers.Last()
+                };
                 //---------------Assert-----------------------
+                var expectedFirstAndLast = new List<ReportingCustomer>
+                {
+                    new ReportingCustomer
+                    {
+                        Id = 1,
+                        Name = "ReshetCall Ltd",
+                        Email = "gal@reshetcall.co.il,v@bizvoip.co.za",
+                        Login = "gal@reshetcall.co.il",
+                        ExternalSystemId = 53580,
+                        TimeZoneId = 370,
+                        Address = new CustomerPhysicalAddress
+                        {
+                            AddressLine1 = "8218 Valentina Divide",
+                            AddressLine2 = "171 Leif Landing",
+                            City = "New Missouriport",
+                            Province = "Mpumalanga",
+                            PostCode = "8484"
+                        }
+                    },
+                    new ReportingCustomer
+                    {
+                        Id = 50,
+                        Name = "Air Hub Customer1",
+                        Email = "litc@live.co.za",
+                        Login = null,
+                        ExternalSystemId = 55596,
+                        TimeZoneId = 113,
+                        Address = new CustomerPhysicalAddress
+                        {
+                            AddressLine1 = "6789 Verla Field",
+                            AddressLine2 = "83553 Peggie Fords",
+                            City = "New Noraport",
+                            Province = "Limpopo",
+                            PostCode = "9543"
+                        }
+                    }
+                };
                 Assert.AreEqual(50, customers.Count());
-
-                // todo : check first for calls and last for calls
-                Assert.AreEqual(new Customer(), customers.First());
-                Assert.AreEqual(new Customer(), customers.Last());
+                actualFirstAndLast.Should().BeEquivalentTo(expectedFirstAndLast);
             }
         }
 
         [Test]
+        [Ignore("wip")]
         public void PopulateReportingCustomer_WhenPerformingOneToManyMapping_ShouldReturnCustomersAndTheirCalls()
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -75,7 +142,7 @@ namespace Dapper.Demo.Tests
 
                 //---------------Act----------------------
                 var sql = "select Id, Name,Email, Login, TimeZoneId, ExternalSystemId from dbo.Customers";
-                var customers = connection.Query<ReportingCustomer, Call, ReportingCustomer>(sql,
+                var customers = connection.Query<BillingCustomer, Call, ReportingCustomer>(sql,
                     (customer, call) =>
                     {
                         //if (call.ExternalAccountId)

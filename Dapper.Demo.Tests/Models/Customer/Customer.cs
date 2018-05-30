@@ -8,6 +8,5 @@
         public string Login { get; set; }
         public int TimeZoneId { get; set; }
         public int ExternalSystemId { get; set; }
-
     }
 }
