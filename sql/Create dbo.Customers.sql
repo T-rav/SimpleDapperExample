@@ -7,6 +7,6 @@
 	[TimeZoneId]       INT          NOT NULL,
 	[ExternalSystemId] INT          NOT NULL,
 	[Created]          DATETIME     NOT NULL,
-	[Modifed]          DATETIME     NOT NULL,
+	[Modified]          DATETIME     NOT NULL,
 	CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
 );

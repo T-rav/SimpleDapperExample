@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Calls]
 (
 	[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
-	[ExternalAccountId] INT NOT NULL, 
+	[ExternalSystemId] INT NOT NULL, 
 	[ExternalCallId] INT NOT NULL,
 	[ConferenceId] VARCHAR(36) NOT NULL, 
 	[Cld] VARCHAR(50) NULL, 
@@ -12,5 +12,5 @@
 	[BilledSeconds] INT NOT NULL, 
 	[UtcBillTime] DATETIME NOT NULL,
 	[Created] DATETIME NOT NULL, 
-	[Modifed] DATETIME NOT NULL
+	[Modified] DATETIME NOT NULL
 );

@@ -4,6 +4,11 @@ namespace Dapper.Demo.Tests.Models.Customer
 {
     public class BillingCustomer
     {
+        public BillingCustomer()
+        {
+            Calls = new List<Call>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

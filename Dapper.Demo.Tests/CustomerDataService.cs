@@ -24,7 +24,7 @@ namespace Dapper.Demo.Tests
             }
         }
 
-        public IEnumerable<InvoiceCustomer> GetInvoiceCustomer()
+        public IEnumerable<InvoiceCustomer> GetInvoiceCustomers()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -35,6 +35,24 @@ namespace Dapper.Demo.Tests
                     (customer, address) =>
                     {
                         customer.Address = address;
+                        return customer;
+                    }, splitOn: "Id");
+
+                return customers;
+            }
+        }
+
+        public IEnumerable<BillingCustomer> GetBillingCustomers()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var sql = "SELECT *" +
+                          " FROM dbo.Calls ca LEFT JOIN dbo.Customers c" +
+                          " ON ca.ExternalSystemId = c.ExternalSystemId";
+                var customers = connection.Query<BillingCustomer, Call, BillingCustomer>(sql,
+                    (customer, call) =>
+                    {
+                        customer.Calls.Add(call);
                         return customer;
                     }, splitOn: "Id");
 
